@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Bell, RefreshCw, Filter, Search, Shield, MapPin, Clock, MoreVertical, X, ExternalLink } from "lucide-react"
+import { Bell, RefreshCw, Filter, Search, Shield, MapPin, Clock, MoreVertical, X, ExternalLink, Printer } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
@@ -10,6 +10,7 @@ import DashboardPageLayout from "@/components/dashboard/layout"
 import CreditCardIcon from "@/components/icons/credit-card"
 import { useTransactions } from "@/hooks/use-transactions"
 import { NETWORKS } from "@/lib/config"
+import { printTransactionInvoice } from "@/components/dashboard/printing-invoice"
 
 // Helper function to format address
 const formatAddress = (address: string) => {
@@ -371,14 +372,26 @@ export default function TransactionsPage() {
             </div>
           </div>
 
-          <div className="flex gap-3 pt-4 border-t border-border/40">
-            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">Assign Mission</Button>
-            <Button variant="outline" className="border-border/40 bg-transparent">
-              View History
-            </Button>
-            <Button variant="outline" className="border-border/40 bg-transparent">
-              Send Message
-            </Button>
+          <div className="flex flex-col gap-6 pt-4 border-t border-border/40">
+            <div className="grid grid-cols-3 gap-3">
+              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">Assign Mission</Button>
+              <Button variant="outline" className="border-border/40 bg-transparent">
+                View History
+              </Button>
+              <Button variant="outline" className="border-border/40 bg-transparent">
+                Send Message
+              </Button>
+            </div>
+
+            <div className="flex justify-center w-full">
+              <Button
+                className="w-auto px-8 bg-orange-500 hover:bg-orange-600 text-white font-semibold shadow-sm hover:shadow-orange-500/20 transition-all"
+                onClick={() => printTransactionInvoice(selectedTransaction)}
+              >
+                <Printer className="size-4 mr-2" />
+                Print Invoice
+              </Button>
+            </div>
           </div>
         </DialogContent>
       </Dialog>
